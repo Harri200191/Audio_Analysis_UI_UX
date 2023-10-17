@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import useRedirectLoggedOutUser from "../../customHook/useRedirectLoggedOutUser"; 
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/features/auth/authslice";
+import FileLoader from "../../components/fileLoader/FileLoader";
 
 const Dashboard = () => {
   useRedirectLoggedOutUser("/login");
@@ -10,9 +11,8 @@ const Dashboard = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <div>
-      <h2 className="temp">Dashboard</h2>
-      <hr/>
+    <div> 
+      <FileLoader/>
     </div>
 
   );

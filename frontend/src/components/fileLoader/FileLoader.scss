@@ -1,0 +1,130 @@
+/* Style for the container that centers the file selector */
+.file-selector-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45vh;
+    background-color: #f0f0f0; /* Background color for the entire page */
+  }
+  
+  /* Style for the file selector box */
+  .file-selector-box {
+    border: 2px solid #333; /* Border around the box */
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff; /* Background color for the box */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for a subtle depth effect */
+    text-align: center;
+    max-width: 400px; /* Set the maximum width of the box */
+  }
+  
+  /* Style for the "Clear" button */
+  .file-selector-box button {
+    background-color: #d9534f; /* Red background color for the button */
+    color: #fff; /* Text color for the button */
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .file-selector-box button:hover {
+    background-color: #c9302c; /* Darker red on hover */
+  }
+
+  .file-input-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  /* Style for the actual file input field */
+  .file-input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+  }
+
+  .file-choose-button {
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Text color */
+    padding: 10px 20px; /* Padding for the button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .file-choose-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style for the selected file display */
+  .selected-file {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+
+  /* Style for the file input container */
+.file-input-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  /* Style for the actual file input field */
+  .file-input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+  }
+  
+  /* Style for the file choosing button */
+  .file-choose-button {
+    margin-top: 5px;
+    font-size: 1.6rem;
+    font-weight: 400;
+    padding: 6px 8px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    padding: 8px 10px;
+    width: 100%;
+    font-size: medium;
+
+
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Text color */
+    padding: 10px 20px; /* Padding for the button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .file-choose-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style for the selected file display */
+  .selected-file {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  
+  
+  
+  
+  
