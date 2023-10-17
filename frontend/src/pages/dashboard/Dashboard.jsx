@@ -9,12 +9,10 @@ const Dashboard = () => {
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-
   return (
     <div>
       <h2 className="temp">Dashboard</h2>
       <hr/>
-  
     </div>
 
   );

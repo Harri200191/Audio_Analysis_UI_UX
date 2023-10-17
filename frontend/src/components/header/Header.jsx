@@ -5,7 +5,6 @@ import { selectName, SET_LOGIN } from "../../redux/features/auth/authslice";
 import { logoutUser } from "../../services/authServices";
 import { confirmAlert } from "react-confirm-alert";
  
-
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ const Header = () => {
           <span className="--fw-thin">Welcome, </span>
           <span className="--color-danger">{name}</span>
         </h3> 
-        <button onClick={() => confirmDelete()} className="--btn --btn-custom">
+        <button onClick={() => logout()} className="--btn --btn-custom">
           Logout
         </button>
       </div>
