@@ -5,7 +5,7 @@ import Card from "../../components/card/Card";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { registerUser, validateEmail } from "../../services/authservice";
+import { registerUser, validateEmail } from "../../services/authServices";
 import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authslice";
 import Loader from "../../components/loader/Loader";
 
@@ -50,6 +50,7 @@ const Register = () => {
       email,
       password,
     };
+    
     setIsLoading(true);
     try {
       const data = await registerUser(userData);

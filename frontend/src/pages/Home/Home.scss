@@ -1,10 +1,12 @@
 .home {
-  background-color: #00406a;
+  
+  background-color: #1a0c57;
   min-height: 100vh;
 
   & nav { 
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+    margin-bottom: 100px;
     color: #fff;
     & > .logo {
       color: #fff;
@@ -31,6 +33,7 @@
 }
 
 .hero-text {
+  margin-right: 100px;
   padding-top: 50px;
   width: 50%;
   & > * {

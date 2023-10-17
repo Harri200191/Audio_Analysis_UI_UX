@@ -1,8 +1,10 @@
 import React from 'react'
-import {BiSolidDish} from "react-icons/bi";
+import {AiFillAudio} from "react-icons/ai";
+import {FcAudioFile} from "react-icons/fc"
+import {SiAudiomack} from "react-icons/si"
 import { Link } from 'react-router-dom';
 import "./Home.scss";
-import heroImg from "../../assets/inv-img.png"
+import heroImg from "../../assets/pngwing.com.png"
 import { ShowOnLogin, ShowOnLogout } from '../../components/protect/HiddenLink';
 
 const Home = () => {
@@ -10,8 +12,11 @@ const Home = () => {
     <div className='home'>
       <nav className='container --flex-between'>
         <div className="logo">
-          <BiSolidDish size={35} />
+          <AiFillAudio size={35} />
+          <FcAudioFile size={35} />
+          <SiAudiomack size={35} />
         </div>
+
         <ul className='home-links'>
           <ShowOnLogout>
             <li>
@@ -36,17 +41,13 @@ const Home = () => {
       </nav>
       <section className='container hero'>
         <div className='hero-text'>
-          <h2>Inventory {"&"} Stock Management Solution</h2>
+          <h1>Transcribe Your Videos,
+            Convert Video to
+            Text Online.</h1>
           <p>
-            Inventory system to control and manage proucts in the warehouse in
-            real timeand integrated to make it easier to develop your business.
+            Convert Your Audio Files to Text, not just in English, but an array of other languages as well!
           </p>
-          <p>
-            Lotus Management is a powerful and user-friendly Product Management System (PMS) website designed to streamline and enhance the entire product lifecycle management process. Whether you are a startup founder, a product manager at a large corporation, or a small business owner, Lotus Management is your go-to platform for efficiently managing your products from ideation to retirement. 
-          </p>
-          <p>
-            Lotus itself is a brand that manufactures world class chafing dish which are not only sold locally but also exported to other countries to big brand names! Suffice to say that they themselves being the pioneer of this management system is enough to vouch for the credibility of this application!
-          </p>
+          
           <div className="hero-buttons">
             <button className="--btn --btn-secondary">
               <Link to="/register">Get Started</Link>

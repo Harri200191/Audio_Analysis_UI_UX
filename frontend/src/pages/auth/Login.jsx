@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { loginUser, validateEmail } from "../../services/authservice";
+import { loginUser, validateEmail } from "../../services/authServices";
 import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authslice";
 
 const initialState = {
@@ -81,10 +81,6 @@ const Login = () => {
               </button>
             </Link>
           </form>
-          <Link to="/forgot">
-            <p className="--custom-p">Forgot Password</p>
-          </Link>
-
           <hr />
 
           <span className={styles.register}>

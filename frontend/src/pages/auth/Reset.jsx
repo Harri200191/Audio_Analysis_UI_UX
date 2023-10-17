@@ -4,7 +4,7 @@ import { MdPassword } from "react-icons/md";
 import Card from "../../components/card/Card";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { resetPassword } from "../../services/authservice";
+import { resetPassword } from "../../services/authServices";
 
 const initialState = {
   password: "",
@@ -13,7 +13,7 @@ const initialState = {
 
 const Reset = () => {
   const [formData, setformData] = useState(initialState);
-  const { password, password2 } = formData;
+  const { password, password2 } = formData; 
 
   const { resetToken } = useParams();
 
