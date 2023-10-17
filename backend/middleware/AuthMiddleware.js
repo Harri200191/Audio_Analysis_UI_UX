@@ -1,5 +1,3 @@
-// Purpose of this is to check if user is currently logged in or not. If not, we cant allow 
-// it to access fetchdata api as then it will fetch data of a user who is not logged in
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler"); // to prevent try catch blocks
 const user_model = require("../models/user_model");

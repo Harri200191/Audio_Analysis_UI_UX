@@ -28,26 +28,6 @@ const user_schema = mongoose.Schema(
             minLength: [8, "Password must be at least 8 charachters"],
             //maxLength: [20, "Password must have at most 20 charachters"],
         },
-
-        photo: 
-        {
-            type: String,
-            //required : [true, "Please add a photo"],
-            default: "https://i.ibb.co/4pDNDk1/avatar.png"
-        },
-
-        phone: 
-        {
-            type: String,
-            default: "+92 "
-        },
-
-        bio: 
-        {
-            type: String,
-            default: "bio",
-            maxLength: [300, "Bio must have at most 300 charachters"],
-        }
     },
     
     {
