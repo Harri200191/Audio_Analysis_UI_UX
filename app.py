@@ -5,7 +5,7 @@ from pydub import AudioSegment
 import speech_recognition as sr 
 
 app = Flask(__name__)
-CORS(app, origins="*")
+CORS(app, origins="http://localhost:3000", supports_credentials=True)
 
 @app.route('/api/convert-mp3-to-text', methods=['POST'])
 def convert_mp3_to_text():

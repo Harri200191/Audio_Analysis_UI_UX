@@ -50,17 +50,14 @@ const FileLoader = () => {
 
       setIsLoading(true)
       // Make an API call to the server for MP3 to text conversion
-      axios.post(`http://127.0.0.1:5000/api/convert-mp3-to-text`, formData)
-        .then((response) => {
-          console.log(selectedFile);
+      axios.post(`http://127.0.0.1:5000/api/convert-mp3-to-text`, formData, {withCredentials: true})
+        .then((response) => { 
           setConvertedText(response.data.text);
           toast.success("Converted to text!")
           setIsLoading(false)
         })
-        .catch((error) => {
-          console.log(selectedFile);
-          setIsLoading(false)
-          console.log(error);
+        .catch((error) => { 
+          setIsLoading(false) 
           toast.error('Conversion error!');
         });
     }
@@ -95,17 +92,20 @@ const FileLoader = () => {
         </div>
         {selectedFile && (
           <div className="selected-file">
-            Selected File: {selectedFile.name}
+            Selected File: {selectedFile.name}   
+            <br/>   
             <button onClick={clearFile}>Clear</button>
             <br/> 
             <button onClick={handleConversion}>Convert to Text</button>
             {isLoading && <Loader />}
           </div>
         )}
+        <br/>
+        <hr/>
         {convertedText && (
           <div className="converted-text">
-            Converted Text:
-            <div>{convertedText}</div>
+            <h3>Converted Text:</h3>
+            <div className='output'>{convertedText}</div>
           </div>
         )}
       </div>
