@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns 
-from googletrans import Translator 
+from googletrans import Translator  
 
 app = Flask(__name__)
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
@@ -53,6 +53,8 @@ def translate_to_tr(text):
     translator = Translator()    
     turkish_translation = translator.translate(text, src='en', dest='tr').text
     return jsonify({'translated_txt': turkish_translation})
+ 
+ 
 
 if __name__ == '__main__':
     if not os.path.exists('uploads'):

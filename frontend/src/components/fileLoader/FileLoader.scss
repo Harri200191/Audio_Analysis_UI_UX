@@ -173,3 +173,43 @@
   .head2{
     margin-top: 10px;
   }
+
+  .summary_topic {
+    text-align: center; /* Center text horizontally */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center text vertically */
+    border: 2px solid red; /* Red outlined box */
+    padding: 20px; /* Add some padding for spacing */
+    margin-bottom: 20px;
+  }
+  
+  /* Optional: Style the headings and paragraphs within .summary_topic */
+  .summary_topic h3 {
+    font-size: 24px;
+  }
+  
+  .summary_topic p {
+    font-size: 16px;
+    margin-top: 10px; /* Add some margin between the heading and paragraph */
+  }
+  
+  .summary_topic_2 {
+    text-align: center; /* Center text horizontally */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center text vertically */
+    border: 2px solid rgb(21, 0, 255); /* Red outlined box */
+    padding: 20px; /* Add some padding for spacing */
+    margin-bottom: 20px;
+  }
+  
+  /* Optional: Style the headings and paragraphs within .summary_topic */
+  .summary_topic_2 h3 {
+    font-size: 24px;
+  }
+  
+  .summary_topic_2 p {
+    font-size: 16px;
+    margin-top: 10px; /* Add some margin between the heading and paragraph */
+  }
