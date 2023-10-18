@@ -126,3 +126,42 @@
   .output{
     margin-top: 2px;
   }
+
+  .language-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    background-color: #270101;
+    padding: 20px;
+    border: 2px solid #270101;
+    border-radius: 5px;
+  }
+  
+  .language-option {
+    padding: 10px;
+    margin: 5px;
+    width: 200px;
+    align-items: center;
+    border: 1px solid #ccc;
+    background-color: #e8c1c1;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .language-option:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .selected {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #3498db;
+  }
+  
+  .topic{
+    color: white;
+  }

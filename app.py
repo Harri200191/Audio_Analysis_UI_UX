@@ -1,8 +1,17 @@
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from pydub import AudioSegment
+from pydub import AudioSegment 
 import speech_recognition as sr 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns 
+from googletrans import Translator
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoModelForSeq2SeqLM 
+import subprocess
 
 app = Flask(__name__)
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
@@ -37,6 +46,20 @@ def convert_mp3_to_text():
             return jsonify({'error': 'Could not understand audio'}), 400
         except sr.RequestError as e:
             return jsonify({'error': f'Speech Recognition error: {e}'}), 500
+        
+
+@app.route('/api/translate_toar/<string:text>', methods=['GET'])
+def translate(text):   
+    translator = Translator() 
+    arabic_translation = translator.translate(text, src='en', dest='ar')
+    print(f'English to Arabic: {arabic_translation.text}')
+
+
+@app.route('/api/translate_totr/<string:text>', methods=['GET'])
+def translate(text):   
+    translator = Translator()    
+    turkish_translation = translator.translate(text, src='en', dest='tr')
+    print(f'English to Turkish: {turkish_translation.text}')
 
 if __name__ == '__main__':
     if not os.path.exists('uploads'):
