@@ -7,11 +7,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns 
-from googletrans import Translator
-import nltk
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoModelForSeq2SeqLM 
-import subprocess
+from googletrans import Translator 
 
 app = Flask(__name__)
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
@@ -25,16 +21,13 @@ def convert_mp3_to_text():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
-    if file:
-        # Save the received MP3 file
+    if file: 
         mp3_filename = os.path.join('uploads', file.filename)
         file.save(mp3_filename)
-
-        # Convert MP3 to WAV for better compatibility
+ 
         wav_filename = mp3_filename.replace('.mp3', '.wav')
         AudioSegment.from_mp3(mp3_filename).export(wav_filename, format="wav")
-
-        # Perform speech recognition
+ 
         recognizer = sr.Recognizer()
         with sr.AudioFile(wav_filename) as source:
             audio = recognizer.record(source)
@@ -49,17 +42,17 @@ def convert_mp3_to_text():
         
 
 @app.route('/api/translate_toar/<string:text>', methods=['GET'])
-def translate(text):   
+def translate_to_ar(text):    
     translator = Translator() 
-    arabic_translation = translator.translate(text, src='en', dest='ar')
-    print(f'English to Arabic: {arabic_translation.text}')
+    arabic_translation = translator.translate(text, src='en', dest='ar').text
+    return jsonify({'translated_txt': arabic_translation})
 
 
 @app.route('/api/translate_totr/<string:text>', methods=['GET'])
-def translate(text):   
+def translate_to_tr(text):  
     translator = Translator()    
-    turkish_translation = translator.translate(text, src='en', dest='tr')
-    print(f'English to Turkish: {turkish_translation.text}')
+    turkish_translation = translator.translate(text, src='en', dest='tr').text
+    return jsonify({'translated_txt': turkish_translation})
 
 if __name__ == '__main__':
     if not os.path.exists('uploads'):

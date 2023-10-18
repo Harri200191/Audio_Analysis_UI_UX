@@ -34,7 +34,7 @@ const FileLoader = () => {
       // Make an API call to the server for MP3 to text conversion
       axios.post(`http://127.0.0.1:5000/api/convert-mp3-to-text`, formData, {withCredentials: true})
         .then((response) => { 
-          setTranslatedTxt(response.data.text);
+          setConvertedText(response.data.text);
           toast.success("Converted to text!")
           setIsLoading(false)
         })
@@ -48,15 +48,17 @@ const FileLoader = () => {
   const handleLanguageSelect = (language) => {
     setSelectedLanguage(language);
 
-    if (selectedLanguage) { 
+    if (selectedLanguage && convertedText) { 
       setIsLoading(true) 
-      axios.get(`http://127.0.0.1:5000/api/translate_to${selectedLanguage}/${convertedText}`, {withCredentials: true})
-        .then((response) => { 
-          setConvertedText(response.data.text);
+      axios.get(`http://127.0.0.1:5000/api/translate_to${selectedLanguage}/${convertedText}`)
+        .then((response) => {  
+          console.log(response.data)
+          setTranslatedTxt(response.data.translated_txt);
           toast.success("Translated succesfully!")
           setIsLoading(false)
         })
         .catch((error) => { 
+          console.log(error);
           setIsLoading(false) 
           toast.error('Conversion error!');
         });
@@ -102,7 +104,7 @@ const FileLoader = () => {
             </div>
           )}
           <br/>
-          <hr/>
+          <hr className='line'/>
           {convertedText && (
             <div className="converted-text">
               <h3>Converted Text:</h3>
@@ -114,16 +116,21 @@ const FileLoader = () => {
       {convertedText && (
         <div className="language-selector">
           <h2 className='topic'>Select a Language To Translate To</h2>
-          <div className={`language-option ${selectedLanguage === 'tr' ? 'selected' : ''}`} onClick={() => handleLanguageSelect('tr')}>
+          <button className={`language-option ${selectedLanguage === 'tr' ? 'selected' : ''}`} onClick={() => handleLanguageSelect('tr')}>
             <p>Turkish</p>
-          </div>
-          <div className={`language-option ${selectedLanguage === 'ar' ? 'selected' : ''}`} onClick={() => handleLanguageSelect('ar')}>
+          </button>
+          {isLoading && <Loader />}
+          <button className={`language-option ${selectedLanguage === 'ar' ? 'selected' : ''}`} onClick={() => handleLanguageSelect('ar')}>
             <p>Arabic</p>
-          </div>
+          </button>
+          {isLoading && <Loader />}
         </div>
-      )}
+      )} 
       {TranslatedTxt && (
-        <p>{TranslatedTxt}</p>
+        <div>
+          <h3 className='head2'>Translated Text: </h3>
+          <p>{TranslatedTxt}</p>
+        </div>
       )}
     </div>
   );
