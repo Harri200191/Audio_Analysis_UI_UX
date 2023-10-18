@@ -8,21 +8,23 @@ const FileLoader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [convertedText, setConvertedText] = useState(''); 
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState(''); // State to store the selected language
+  const [selectedLanguage, setSelectedLanguage] = useState('');  
   const [TurkTranslatedTxt, setTurkTranslatedTxt] = useState(''); 
   const [ArTranslatedTxt, setArTranslatedTxt] = useState(''); 
   const [Topic, setTopic] = useState(''); 
   const [EnSumm, setEnSumm] = useState(''); 
   const [TrSumm, setTrSumm] = useState(''); 
   const [ArSumm, setArSumm] = useState(''); 
+  const [PosPerc, setPosPerc] = useState(null)
+  const [NegPerc, setNegPerc] = useState(null)
+  const [flag, setFlag] = useState(false)
 
-  // Function to handle file selection
+ 
   const handleFileSelect = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0];     
     setSelectedFile(file);
   };
-
-  // Function to clear the selected file
+ 
   const clearFile = () => {
     setSelectedFile(null);
     setConvertedText('');
@@ -33,26 +35,65 @@ const FileLoader = () => {
   const handleConversion = () => {
     if (selectedFile) {
       const formData = new FormData();
-      formData.append('file', selectedFile);
+      formData.append('file', selectedFile); 
+      setIsLoading(true) 
 
-      setIsLoading(true)
-      // Make an API call to the server for MP3 to text conversion
-      axios.post(`http://127.0.0.1:5000/api/convert-mp3-to-text`, formData, {withCredentials: true})
-        .then((response) => { 
-          let txt = response.data.text
-          setConvertedText(response.data.text);
-          toast.success("Converted to text!")
-          setIsLoading(false)
+      let newformData = new FormData();
+      newformData.append('file', "C:\\Audio_Analysis_UI_UX\\uploads\\output.mp3"); 
+
+      const fileName = selectedFile.name;
+      const fileExtension = fileName.split('.').pop();
+      
+      if (fileExtension == "mp4"){
+        axios.post(`http://127.0.0.1:5000/api/convert-video-to-mp3`, formData, {withCredentials: true})
+        .then((response) => {  
+          let audi = response.data.audio_file
+          toast.success("Changed to wav format!")
+          setIsLoading(true) 
           setTimeout(() => {
-            FindTopic(txt);
-          }, 1000);
+            axios.post(`http://127.0.0.1:5000/api/convert-mp4-to-text`, {withCredentials: true})
+            .then((response) => { 
+              let txt = response.data.text
+              setConvertedText(response.data.text);
+              toast.success("Converted to text!")
+              setIsLoading(false)
+              setTimeout(() => {
+                FindTopic(txt);
+              }, 1000);
+            })
+            .catch((error) => { 
+              console.log(error)
+              setIsLoading(false) 
+              toast.error('Cant Convert to text!');
+            }); 
+          }, 3000);
+
+          setIsLoading(false) 
         })
         .catch((error) => { 
+          console.log(error)
           setIsLoading(false) 
           toast.error('Conversion error!');
         });
-    } 
+        return null;
+      } 
 
+      axios.post(`http://127.0.0.1:5000/api/convert-mp3-to-text`, formData, {withCredentials: true})
+      .then((response) => { 
+        let txt = response.data.text
+        setConvertedText(response.data.text);
+        toast.success("Converted to text!")
+        setIsLoading(false)
+        setTimeout(() => {
+          FindTopic(txt);
+        }, 1000);
+      })
+      .catch((error) => { 
+        console.log(error)
+        setIsLoading(false) 
+        toast.error('Conversion error!');
+      });  
+    } 
   }
 
   const FindTopic = (txt) =>{   
@@ -82,6 +123,11 @@ const FileLoader = () => {
         setTrSumm(response.data.summary_tr)
         setEnSumm(response.data.summary_en)
         toast.success("Topic Found succesfully!")
+
+        setTimeout(() => {
+          HandleSentiment(txt);
+        }, 1000);
+ 
         setIsLoading(false)
       })
       .catch((error) => {  
@@ -89,14 +135,32 @@ const FileLoader = () => {
         setIsLoading(false) 
         toast.error('Some error!');
       }); 
-  }
+  };
+
+  const HandleSentiment = (txt) => {
+    setIsLoading(true) 
+    axios.get(`http://127.0.0.1:5000/api/sentiment/${txt}`, {withCredentials: true})
+      .then((response) => {  
+        console.log(response.data)
+        setPosPerc(response.data.positive)
+        setNegPerc(response.data.negative)
+        setFlag(true)
+        toast.success("Sentiments Retrieved!")
+        setIsLoading(false)
+      })
+      .catch((error) => {  
+        console.log(error)
+        setIsLoading(false) 
+        toast.error('Some error!');
+      }); 
+  };
 
   const handleLanguageSelect = (language) => {
     setSelectedLanguage(language);
 
     if (language && convertedText) { 
       setIsLoading(true) 
-      axios.get(`http://127.0.0.1:5000/api/translate_to${selectedLanguage}/${convertedText}`)
+      axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
         .then((response) => {   
           setTurkTranslatedTxt(response.data.translated_txt);
           toast.success("Translated succesfully!")
@@ -114,7 +178,7 @@ const FileLoader = () => {
 
     if (language && convertedText) { 
       setIsLoading(true) 
-      axios.get(`http://127.0.0.1:5000/api/translate_to${selectedLanguage}/${convertedText}`)
+      axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
         .then((response) => {   
           setArTranslatedTxt(response.data.translated_txt);
           toast.success("Translated succesfully!")
@@ -200,8 +264,13 @@ const FileLoader = () => {
               <p>{ArSumm}</p>
             </div>
           )}
-
-            
+          {flag && (
+            <div className='summary_topic_2'>
+              <h3>Sentiment Analysis</h3>
+              <p>Positive Percentage: {PosPerc}</p>
+              <p>Negative Percentage: {NegPerc}</p>
+            </div>
+          )}
       </div>
       {convertedText && (
         <div className="language-selector">
@@ -219,13 +288,13 @@ const FileLoader = () => {
       {isLoading && <Loader />}
       {!isLoading && TurkTranslatedTxt && (
         <div>
-          <h3 className='head2'>Translated Text: </h3>
+          <h3 className='head2'>Translated Text In Turkish: </h3>
           <p>{TurkTranslatedTxt}</p>
         </div>
       )}
       {!isLoading && ArTranslatedTxt && (
         <div>
-          <h3 className='head2'>Translated Text: </h3>
+          <h3 className='head2'>Translated Text In Arabic: </h3>
           <p>{ArTranslatedTxt}</p>
         </div>
       )}
