@@ -1,0 +1,13 @@
+torch==1.7.0
+pandas
+numpy
+matplotlib
+seaborn
+SpeechRecognition
+pydub
+googletrans
+nltk
+transformers
+google-cloud-speech
+Flask
+Flask-Cors
