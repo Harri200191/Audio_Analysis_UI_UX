@@ -1,27 +1,12 @@
-import os
-from pydub import AudioSegment 
-import speech_recognition as sr 
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-
-def convert_mp4_to_text():
-    file = os.path.abspath('./uploads/output.mp3') 
-
-    if file: 
-        mp3_filename = file
-        wav_filename = mp3_filename.replace('.mp3', '.wav') 
-        AudioSegment.from_mp3(mp3_filename).export(wav_filename, format="wav")
+import winsound
+import time
  
-        recognizer = sr.Recognizer()
-        with sr.AudioFile(wav_filename) as source: 
-            audio = recognizer.record(source)
+notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88] 
+durations = [500, 500, 1000, 500, 500, 1000, 500, 500, 500, 500, 1000, 500, 500, 1000, 500, 500, 1000]
 
-        try: 
-            text = recognizer.recognize_google(audio)
-            return text
-        except sr.UnknownValueError:
-            return "error"
-        except sr.RequestError as e:
-            return "error"
-         
-        
+# Play "Happy Birthday" melody
+for note, duration in zip(notes, durations):
+    winsound.Beep(int(note), duration)
+
+    # Pause between notes
+    time.sleep(0.1)
