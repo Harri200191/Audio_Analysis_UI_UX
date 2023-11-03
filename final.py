@@ -8,14 +8,9 @@ import os
 from pydub import AudioSegment 
 
 def video_to_mp3(video_file):
-    try:
-        # Load the video file
-        video_clip = mp.VideoFileClip(video_file)
-
-        # Extract audio from the video
-        audio_clip = video_clip.audio
-
-        # Save the audio as an MP3 file with the same name as the video
+    try:  
+        video_clip = mp.VideoFileClip(video_file) 
+        audio_clip = video_clip.audio 
         mp3_file = video_file.rsplit(".", 1)[0] + ".mp3"
         audio_clip.write_audiofile(mp3_file, codec="mp3")
 
