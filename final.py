@@ -1,10 +1,13 @@
-import tkinter as tk
+import tkinter as tk 
+
 import speech_recognition as sr 
-from tkinter import filedialog
-from moviepy.editor import VideoFileClip
+
+from tkinter import filedialog 
+
 import shutil
-import moviepy.editor as mp
-import os
+
+import moviepy.editor as mp 
+
 from pydub import AudioSegment 
 
 def video_to_mp3(video_file):
