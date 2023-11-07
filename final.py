@@ -1,14 +1,10 @@
 import tkinter as tk 
-
 import speech_recognition as sr 
-
 from tkinter import filedialog 
-
 import shutil
-
 import moviepy.editor as mp 
-
 from pydub import AudioSegment 
+import spacy
 
 def video_to_mp3(video_file):
     try:  
@@ -60,6 +56,25 @@ def mp3_to_text(mp3_file):
     except Exception as e:
         return f"Error: {str(e)}"
 
+ 
+# Load a spaCy NLP model
+nlp = spacy.load("en_core_web_sm")
+ 
+
+# Process transcribed text with spaCy
+def analyze_text(text):
+    doc = nlp(text)
+    
+    # Determine the number of people speaking (named entities)
+    person_count = len([ent.text for ent in doc.ents if ent.label_ == "PERSON"])
+    
+    # Extract topics or keywords (you may need a more advanced model for this)
+    topics = [token.text for token in doc if token.is_alpha and not token.is_stop]
+    
+    return person_count, topics
+ 
+    
+
 if __name__ == "__main__":
     mp3_file = select_and_store_file()  
 
@@ -71,6 +86,11 @@ if __name__ == "__main__":
         else:
             print("Text from MP3 file:")
             print(result)
+
+            person_count, topics = analyze_text(result)
+    
+            print(f"Number of people speaking: {person_count}")
+            print("Topics or keywords:", topics)
     
     else:
         converted_tomp3 = video_to_mp3(mp3_file)
@@ -81,6 +101,12 @@ if __name__ == "__main__":
         else:
             print("Text from MP3 file:")
             print(result)
+
+            person_count, topics = analyze_text(result)
+    
+            print(f"Number of people speaking: {person_count}")
+            print("Topics or keywords:", topics)
+
  
         
  
