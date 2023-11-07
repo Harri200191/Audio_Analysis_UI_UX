@@ -6,6 +6,9 @@ import moviepy.editor as mp
 from pydub import AudioSegment 
 import spacy
 
+# Load a spaCy NLP model
+nlp = spacy.load("en_core_web_sm")
+
 def video_to_mp3(video_file):
     try:  
         video_clip = mp.VideoFileClip(video_file) 
@@ -55,26 +58,15 @@ def mp3_to_text(mp3_file):
     
     except Exception as e:
         return f"Error: {str(e)}"
-
  
-# Load a spaCy NLP model
-nlp = spacy.load("en_core_web_sm")
- 
-
 # Process transcribed text with spaCy
 def analyze_text(text):
-    doc = nlp(text)
-    
-    # Determine the number of people speaking (named entities)
-    person_count = len([ent.text for ent in doc.ents if ent.label_ == "PERSON"])
-    
-    # Extract topics or keywords (you may need a more advanced model for this)
+    doc = nlp(text) 
+    person_count = len([ent.text for ent in doc.ents if ent.label_ == "PERSON"]) 
     topics = [token.text for token in doc if token.is_alpha and not token.is_stop]
     
     return person_count, topics
  
-    
-
 if __name__ == "__main__":
     mp3_file = select_and_store_file()  
 
