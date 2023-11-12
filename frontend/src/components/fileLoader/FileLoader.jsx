@@ -19,7 +19,7 @@ const FileLoader = () => {
   const [PosPerc, setPosPerc] = useState(null)
   const [NegPerc, setNegPerc] = useState(null)
   const [flag, setFlag] = useState(false)
-  const [noofpeople, setnoofpeople] = useState(0)
+  const [noofpeople, setnoofpeople] = useState(null)
 
  
   const handleFileSelect = (e) => {
@@ -254,6 +254,7 @@ const FileLoader = () => {
           <br/>
           {convertedText && (
             <div className="converted-text">
+              {isLoading && <Loader />}
               <hr className='line'/>
               <h3>Converted Text:</h3>
               <div className='output'>{convertedText}</div>
@@ -269,12 +270,14 @@ const FileLoader = () => {
               <br/>
               <p>One Word Topic:</p>
               <p>{Topic2}</p>
+              {isLoading && <Loader />}
             </div>
           )}
           {noofpeople && (
             <div className='summary_topic'>
               <h3>Number of people in the video</h3>
               <p>{noofpeople}</p> 
+              {isLoading && <Loader />}
             </div>
           )}
           {EnSumm && (
