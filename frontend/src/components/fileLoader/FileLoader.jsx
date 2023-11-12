@@ -266,6 +266,15 @@ const FileLoader = () => {
             <div className='summary_topic'>
               <h3>Topic of the video </h3>
               <p>{Topic}</p>
+              <br/>
+              <p>One Word Topic:</p>
+              <p>{Topic2}</p>
+            </div>
+          )}
+          {noofpeople && (
+            <div className='summary_topic'>
+              <h3>Number of people in the video</h3>
+              <p>{noofpeople}</p> 
             </div>
           )}
           {EnSumm && (
