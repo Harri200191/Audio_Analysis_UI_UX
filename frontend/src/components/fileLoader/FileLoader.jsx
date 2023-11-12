@@ -12,12 +12,14 @@ const FileLoader = () => {
   const [TurkTranslatedTxt, setTurkTranslatedTxt] = useState(''); 
   const [ArTranslatedTxt, setArTranslatedTxt] = useState(''); 
   const [Topic, setTopic] = useState(''); 
+  const [Topic2, setTopic2] = useState(''); 
   const [EnSumm, setEnSumm] = useState(''); 
   const [TrSumm, setTrSumm] = useState(''); 
   const [ArSumm, setArSumm] = useState(''); 
   const [PosPerc, setPosPerc] = useState(null)
   const [NegPerc, setNegPerc] = useState(null)
   const [flag, setFlag] = useState(false)
+  const [noofpeople, setnoofpeople] = useState(0)
 
  
   const handleFileSelect = (e) => {
@@ -103,7 +105,7 @@ const FileLoader = () => {
           setTopic(response.data.topic);
           toast.success("Topic Found succesfully!")
           setTimeout(() => {
-            FindSummary(txt);
+            FindPeople(txt);
           }, 1000);
 
           setIsLoading(false)
@@ -114,6 +116,26 @@ const FileLoader = () => {
           toast.error('Some error!');
         }); 
   }
+
+  const FindPeople = (txt) =>{   
+    setIsLoading(true) 
+    axios.get(`http://127.0.0.1:5000/api/analyze-audio/${txt}`, {withCredentials: true})
+      .then((response) => {   
+        setnoofpeople(response.data.person_count);
+        setTopic2(response.data.topic)
+        toast.success("People Found succesfully!")
+        setTimeout(() => {
+          FindSummary(txt);
+        }, 1000);
+
+        setIsLoading(false)
+      })
+      .catch((error) => {  
+        console.log(error)
+        setIsLoading(false) 
+        toast.error('Some error!');
+      }); 
+}
 
   const FindSummary = (txt) => { 
     setIsLoading(true) 

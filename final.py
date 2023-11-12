@@ -114,7 +114,7 @@ def analyze_text(text):
     person_count = len([ent.text for ent in doc.ents if ent.label_ == "PERSON"]) 
     topics = [token.text for token in doc if token.is_alpha and not token.is_stop]
     
-    return person_count, topics
+    return person_count + 1 , topics
  
 if __name__ == "__main__":
     mp3_file = select_and_store_file()  
