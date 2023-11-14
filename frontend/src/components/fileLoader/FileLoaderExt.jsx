@@ -264,7 +264,10 @@ const FileLoader = () => {
       </div>
       <div> 
           {Topic && (
-            <div className='summary_topic'> 
+            <div className='summary_topic'>
+              <h3>Topic of the video </h3>
+              <p>{Topic}</p>
+              <br/>
               <p>One Word Topic:</p>
               <p>{Topic2}</p>
               {isLoading && <Loader />}
@@ -277,7 +280,58 @@ const FileLoader = () => {
               {isLoading && <Loader />}
             </div>
           )}
+          {EnSumm && (
+            <div className='summary_topic_2'>
+              <h3>Summary In English</h3>
+              <p>{EnSumm}</p>
+            </div>
+          )}
+          {TrSumm && (
+            <div className='summary_topic_2'>
+              <h3>Summary In Turkish </h3>
+              <p>{TrSumm}</p>
+            </div>
+          )}
+          {ArSumm && (
+            <div className='summary_topic_2'>
+              <h3>Summary in Arabic</h3>
+              <p>{ArSumm}</p>
+            </div>
+          )}
+          {flag && (
+            <div className='summary_topic_2'>
+              <h3>Sentiment Analysis</h3>
+              <p>Positive Percentage: {PosPerc}</p>
+              <p>Negative Percentage: {NegPerc}</p>
+            </div>
+          )}
       </div>
+      {convertedText && (
+        <div className="language-selector">
+          <h2 className='topic'>Select a Language To Translate To</h2>
+          <button className={`language-option ${selectedLanguage === 'tr' ? 'selected' : ''}`} onClick={() => handleLanguageSelect('tr')}>
+            <p>Turkish</p>
+          </button>
+          {isLoading && <Loader />}
+          <button className={`language-option ${selectedLanguage === 'ar' ? 'selected' : ''}`} onClick={() => handleLanguageSelectAr('ar')}>
+            <p>Arabic</p>
+          </button>
+          {isLoading && <Loader />}
+        </div>
+      )} 
+      {isLoading && <Loader />}
+      {!isLoading && TurkTranslatedTxt && (
+        <div>
+          <h3 className='head2'>Translated Text In Turkish: </h3>
+          <p>{TurkTranslatedTxt}</p>
+        </div>
+      )}
+      {!isLoading && ArTranslatedTxt && (
+        <div>
+          <h3 className='head2'>Translated Text In Arabic: </h3>
+          <p>{ArTranslatedTxt}</p>
+        </div>
+      )}
     </div>
   );
 };
