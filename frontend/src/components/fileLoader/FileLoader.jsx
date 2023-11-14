@@ -13,6 +13,7 @@ const FileLoader = () => {
   const [ArTranslatedTxt, setArTranslatedTxt] = useState(''); 
   const [Topic, setTopic] = useState(''); 
   const [Topic2, setTopic2] = useState(''); 
+  const [Topic3, setTopic3] = useState(''); 
   const [EnSumm, setEnSumm] = useState(''); 
   const [TrSumm, setTrSumm] = useState(''); 
   const [ArSumm, setArSumm] = useState(''); 
@@ -123,11 +124,8 @@ const FileLoader = () => {
       .then((response) => {   
         setnoofpeople(response.data.person_count);
         setTopic2(response.data.topic)
-        toast.success("People Found succesfully!")
-/*         setTimeout(() => {
-          FindSummary(txt);
-        }, 1000); */
-
+        setTopic3(response.data.topic2)
+        toast.success("People Found succesfully!") 
         setIsLoading(false)
       })
       .catch((error) => {  
@@ -258,15 +256,16 @@ const FileLoader = () => {
               <hr className='line'/>
               <h3>Converted Text:</h3>
               <div className='output'>{convertedText}</div>
+              {isLoading && <Loader />}
             </div>
           )}
         </div>   
       </div>
       <div> 
-          {Topic && (
+          {Topic2 && (
             <div className='summary_topic'> 
-              <p>One Word Topic:</p>
-              <p>{Topic2}</p>
+              <h3>Topic of the video </h3>
+              <p>{Topic2}, {Topic3}</p>
               {isLoading && <Loader />}
             </div>
           )}
