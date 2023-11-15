@@ -99,25 +99,6 @@ const FileLoader = () => {
     } 
   }
 
-/*   const FindTopic = (txt) =>{   
-      setIsLoading(true) 
-      axios.get(`http://127.0.0.1:5000/api/findtopic/${txt}`, {withCredentials: true})
-        .then((response) => {   
-          setTopic(response.data.topic);
-          toast.success("Topic Found succesfully!")
-          setTimeout(() => {
-            FindPeople(txt);
-          }, 1000);
-
-          setIsLoading(false)
-        })
-        .catch((error) => {  
-          console.log(error)
-          setIsLoading(false) 
-          toast.error('Some error!');
-        }); 
-  } */
-
   const FindPeople = (txt) =>{   
     setIsLoading(true) 
     axios.get(`http://127.0.0.1:5000/api/analyze-audio/${txt}`, {withCredentials: true})
@@ -134,82 +115,6 @@ const FileLoader = () => {
         toast.error('Some error!');
       }); 
 }
-
-/*   const FindSummary = (txt) => { 
-    setIsLoading(true) 
-    axios.get(`http://127.0.0.1:5000/api/findSummary/${txt}`, {withCredentials: true})
-      .then((response) => {  
-        setArSumm(response.data.summary_ar);
-        setTrSumm(response.data.summary_tr)
-        setEnSumm(response.data.summary_en)
-        toast.success("Topic Found succesfully!")
-
-        setTimeout(() => {
-          HandleSentiment(txt);
-        }, 1000);
- 
-        setIsLoading(false)
-      })
-      .catch((error) => {  
-        console.log(error)
-        setIsLoading(false) 
-        toast.error('Some error!');
-      }); 
-  }; */
-
-/*   const HandleSentiment = (txt) => {
-    setIsLoading(true) 
-    axios.get(`http://127.0.0.1:5000/api/sentiment/${txt}`, {withCredentials: true})
-      .then((response) => {  
-        console.log(response.data)
-        setPosPerc(response.data.positive)
-        setNegPerc(response.data.negative)
-        setFlag(true)
-        toast.success("Sentiments Retrieved!")
-        setIsLoading(false)
-      })
-      .catch((error) => {  
-        console.log(error)
-        setIsLoading(false) 
-        toast.error('Some error!');
-      }); 
-  };
-
-  const handleLanguageSelect = (language) => {
-    setSelectedLanguage(language);
-
-    if (language && convertedText) { 
-      setIsLoading(true) 
-      axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
-        .then((response) => {   
-          setTurkTranslatedTxt(response.data.translated_txt);
-          toast.success("Translated succesfully!")
-          setIsLoading(false)
-        })
-        .catch((error) => {  
-          setIsLoading(false) 
-          toast.error('Conversion error!');
-        });
-    }
-  };
- 
-  const handleLanguageSelectAr = (language) => {
-    setSelectedLanguage(language);
-
-    if (language && convertedText) { 
-      setIsLoading(true) 
-      axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
-        .then((response) => {   
-          setArTranslatedTxt(response.data.translated_txt);
-          toast.success("Translated succesfully!")
-          setIsLoading(false)
-        })
-        .catch((error) => {  
-          setIsLoading(false) 
-          toast.error('Conversion error!');
-        });
-    }
-  }; */
 
   useEffect(() => {
     if (selectedFile) {
