@@ -108,6 +108,9 @@ const FileLoader = () => {
         setTopic3(response.data.topic2)
         toast.success("People Found succesfully!") 
         setIsLoading(false)
+        setTimeout(() => {
+          FindTopic(txt);
+        }, 1000);
       })
       .catch((error) => {  
         console.log(error)
@@ -115,6 +118,62 @@ const FileLoader = () => {
         toast.error('Some error!');
       }); 
 }
+
+const FindTopic = (txt) =>{   
+  setIsLoading(true) 
+  axios.get(`http://127.0.0.1:5000/api/findtopic/${txt}`, {withCredentials: true})
+    .then((response) => {   
+      setTopic(response.data.topic);
+      toast.success("Topic Found succesfully!")
+      setTimeout(() => {
+        FindPeople(txt);
+      }, 1000);
+
+      setIsLoading(false)
+    })
+    .catch((error) => {  
+      console.log(error)
+      setIsLoading(false) 
+      toast.error('Some error!');
+    }); 
+}
+
+const handleLanguageSelect = (language) => {
+  setSelectedLanguage(language);
+
+  if (language && convertedText) { 
+    setIsLoading(true) 
+    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+      .then((response) => {   
+        setTurkTranslatedTxt(response.data.translated_txt);
+        toast.success("Translated succesfully!")
+        setIsLoading(false)
+      })
+      .catch((error) => {  
+        setIsLoading(false) 
+        toast.error('Conversion error!');
+      });
+  }
+};
+
+const handleLanguageSelectAr = (language) => {
+  setSelectedLanguage(language);
+
+  if (language && convertedText) { 
+    setIsLoading(true) 
+    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+      .then((response) => {   
+        setArTranslatedTxt(response.data.translated_txt);
+        toast.success("Translated succesfully!")
+        setIsLoading(false)
+      })
+      .catch((error) => {  
+        setIsLoading(false) 
+        toast.error('Conversion error!');
+      });
+  }
+};
+
 
   useEffect(() => {
     if (selectedFile) {
@@ -167,10 +226,13 @@ const FileLoader = () => {
         </div>   
       </div>
       <div> 
-          {Topic2 && (
-            <div className='summary_topic'> 
+          {Topic && (
+            <div className='summary_topic'>
               <h3>Topic of the video </h3>
-              <p>{Topic2}, {Topic3}</p>
+              <p>{Topic}</p>
+              <br/>
+              <p>One Word Topic:</p>
+              <p>{Topic2}</p>
               {isLoading && <Loader />}
             </div>
           )}
@@ -182,6 +244,32 @@ const FileLoader = () => {
             </div>
           )}
       </div>
+      {convertedText && (
+        <div className="language-selector">
+          <h2 className='topic'>Select a Language To Translate To</h2>
+          <button className={`language-option ${selectedLanguage === 'tr' ? 'selected' : ''}`} onClick={() => handleLanguageSelect('tr')}>
+            <p>Turkish</p>
+          </button>
+          {isLoading && <Loader />}
+          <button className={`language-option ${selectedLanguage === 'ar' ? 'selected' : ''}`} onClick={() => handleLanguageSelectAr('ar')}>
+            <p>Arabic</p>
+          </button>
+          {isLoading && <Loader />}
+        </div>
+      )} 
+      {isLoading && <Loader />}
+      {!isLoading && TurkTranslatedTxt && (
+        <div>
+          <h3 className='head2'>Translated Text In Turkish: </h3>
+          <p>{TurkTranslatedTxt}</p>
+        </div>
+      )}
+      {!isLoading && ArTranslatedTxt && (
+        <div>
+          <h3 className='head2'>Translated Text In Arabic: </h3>
+          <p>{ArTranslatedTxt}</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -98,7 +98,7 @@ const FileLoader = () => {
     } 
   }
 
-/*   const FindTopic = (txt) =>{   
+  const FindTopic = (txt) =>{   
       setIsLoading(true) 
       axios.get(`http://127.0.0.1:5000/api/findtopic/${txt}`, {withCredentials: true})
         .then((response) => {   
@@ -115,7 +115,7 @@ const FileLoader = () => {
           setIsLoading(false) 
           toast.error('Some error!');
         }); 
-  } */
+  }
 
   const FindPeople = (txt) =>{   
     setIsLoading(true) 
@@ -159,11 +159,10 @@ const FileLoader = () => {
       }); 
   }; */
 
-/*   const HandleSentiment = (txt) => {
+  const HandleSentiment = (txt) => {
     setIsLoading(true) 
     axios.get(`http://127.0.0.1:5000/api/sentiment/${txt}`, {withCredentials: true})
-      .then((response) => {  
-        console.log(response.data)
+      .then((response) => {   
         setPosPerc(response.data.positive)
         setNegPerc(response.data.negative)
         setFlag(true)
@@ -211,7 +210,7 @@ const FileLoader = () => {
           toast.error('Conversion error!');
         });
     }
-  }; */
+  };
 
   useEffect(() => {
     if (selectedFile) {
