@@ -125,10 +125,6 @@ const FindTopic = (txt) =>{
     .then((response) => {   
       setTopic(response.data.topic);
       toast.success("Topic Found succesfully!")
-      setTimeout(() => {
-        FindPeople(txt);
-      }, 1000);
-
       setIsLoading(false)
     })
     .catch((error) => {  
@@ -232,7 +228,7 @@ const handleLanguageSelectAr = (language) => {
               <p>{Topic}</p>
               <br/>
               <p>One Word Topic:</p>
-              <p>{Topic2}</p>
+              <p>{Topic2}, {Topic3}</p>
               {isLoading && <Loader />}
             </div>
           )}
