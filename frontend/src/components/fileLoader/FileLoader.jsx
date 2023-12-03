@@ -224,10 +224,10 @@ const handleLanguageSelectAr = (language) => {
       <div> 
           {Topic && (
             <div className='summary_topic'>
-              <h3>Topic of the video </h3>
+              <h3>Topic Of The Video </h3>
               <p>{Topic}</p>
               <br/>
-              <p>One Word Topic:</p>
+              <h3>One Word Topic:</h3>
               <p>{Topic2}, {Topic3}</p>
               {isLoading && <Loader />}
             </div>
