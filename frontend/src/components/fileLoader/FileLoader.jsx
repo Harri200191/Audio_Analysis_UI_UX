@@ -21,6 +21,7 @@ const FileLoader = () => {
   const [NegPerc, setNegPerc] = useState(null)
   const [flag, setFlag] = useState(false)
   const [noofpeople, setnoofpeople] = useState(null)
+  const [language, setLanguage] = useState('en-US');
 
  
   const handleFileSelect = (e) => {
@@ -39,6 +40,7 @@ const FileLoader = () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append('file', selectedFile); 
+      formData.append('language', language);
       setIsLoading(true) 
 
       let newformData = new FormData();
@@ -170,6 +172,33 @@ const handleLanguageSelectAr = (language) => {
   }
 };
 
+const handleSubmitforIn = async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData();  
+  formData.append('language', language);
+
+  try {
+    const response = await fetch('/api/convert-mp3-to-text', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Converted Text:', data.text);
+    } else {
+      console.error('Failed to convert audio to text');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+const handleLanguageChange = (event) => {
+  setLanguage(event.target.value);
+};
+
 
   useEffect(() => {
     if (selectedFile) {
@@ -186,6 +215,20 @@ const handleLanguageSelectAr = (language) => {
 
   return (
     <div>
+        <div className='lan-choice'>
+          <h2 className='head'>Choose Language in which the video is in:</h2> 
+            <br />
+            <label className='t1'>
+              Choose Language:
+              <select className='t2' value={language} onChange={handleLanguageChange}>
+                <option value="en-US">English</option>
+                <option value="ar-EG">Arabic</option>
+                <option value="tr-TR">Turkish</option>
+                <option value="hi-IN">Hindi</option>
+              </select>
+            </label>
+            <br /> 
+        </div>
       <div className="file-selector-container">
         <div className="file-selector-box">
           <h2>Choose Your File</h2>
