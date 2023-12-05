@@ -16,6 +16,7 @@ const FileLoader = () => {
   const [Topic, setTopic] = useState(''); 
   const [Topic2, setTopic2] = useState(''); 
   const [Topic3, setTopic3] = useState(''); 
+  const [Topic5, setTopic5] = useState(''); 
   const [EnSumm, setEnSumm] = useState(''); 
   const [TrSumm, setTrSumm] = useState(''); 
   const [ArSumm, setArSumm] = useState(''); 
@@ -128,6 +129,7 @@ const FindTopic = (txt) =>{
   axios.get(`http://127.0.0.1:5000/api/findtopic/${txt}`, {withCredentials: true})
     .then((response) => {   
       setTopic(response.data.topic);
+      setTopic5(response.data.topic2);
       toast.success("Topic Found succesfully!")
       setIsLoading(false)
     })
@@ -284,11 +286,14 @@ const handleLanguageChange = (event) => {
       <div> 
           {Topic && (
             <div className='summary_topic'>
-              <h3>Topic Of The Video </h3>
+              <h3>Topic Of The Video: </h3>
               <p>{Topic}</p>
               <br/>
-              <h3>One Word Topic:</h3>
+              <h3>And Also:</h3>
               <p>{Topic2}, {Topic3}</p>
+              <br/>
+              <h3>And Also:</h3>
+              <p>{Topic5}</p>
               {isLoading && <Loader />}
             </div>
           )}

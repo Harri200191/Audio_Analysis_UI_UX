@@ -3,8 +3,10 @@
     display: flex;
     justify-content: center;
     align-items: center; 
-    height: 50vh;
+    height: fit-content;
     background-color: #f0f0f0; /* Background color for the entire page */
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
   
   /* Style for the file selector box */
