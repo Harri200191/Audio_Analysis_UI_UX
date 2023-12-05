@@ -11,6 +11,8 @@ const FileLoader = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('');  
   const [TurkTranslatedTxt, setTurkTranslatedTxt] = useState(''); 
   const [ArTranslatedTxt, setArTranslatedTxt] = useState(''); 
+  const [EnTranslatedTxt, setEnTranslatedTxt] = useState(''); 
+  const [HiTranslatedTxt, setHiTranslatedTxt] = useState(''); 
   const [Topic, setTopic] = useState(''); 
   const [Topic2, setTopic2] = useState(''); 
   const [Topic3, setTopic3] = useState(''); 
@@ -137,7 +139,7 @@ const FindTopic = (txt) =>{
 }
 
 const handleLanguageSelect = (language) => {
-  setSelectedLanguage(language);
+  setSelectedLanguage('tr');
 
   if (language && convertedText) { 
     setIsLoading(true) 
@@ -155,7 +157,7 @@ const handleLanguageSelect = (language) => {
 };
 
 const handleLanguageSelectAr = (language) => {
-  setSelectedLanguage(language);
+  setSelectedLanguage('ar');
 
   if (language && convertedText) { 
     setIsLoading(true) 
@@ -172,28 +174,43 @@ const handleLanguageSelectAr = (language) => {
   }
 };
 
-const handleSubmitforIn = async (event) => {
-  event.preventDefault();
+const handleLanguageSelectEn = (language) => {
+  setSelectedLanguage('en');
 
-  const formData = new FormData();  
-  formData.append('language', language);
-
-  try {
-    const response = await fetch('/api/convert-mp3-to-text', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('Converted Text:', data.text);
-    } else {
-      console.error('Failed to convert audio to text');
-    }
-  } catch (error) {
-    console.error('Error:', error);
+  if (language && convertedText) { 
+    setIsLoading(true) 
+    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+      .then((response) => {   
+        setEnTranslatedTxt(response.data.translated_txt);
+        toast.success("Translated succesfully!")
+        setIsLoading(false)
+      })
+      .catch((error) => {  
+        setIsLoading(false) 
+        toast.error('Conversion error!');
+      });
   }
 };
+
+
+const handleLanguageSelectHi = (language) => {
+  setSelectedLanguage('hi');
+
+  if (language && convertedText) { 
+    setIsLoading(true) 
+    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+      .then((response) => {   
+        setHiTranslatedTxt(response.data.translated_txt);
+        toast.success("Translated succesfully!")
+        setIsLoading(false)
+      })
+      .catch((error) => {  
+        setIsLoading(false) 
+        toast.error('Conversion error!');
+      });
+  }
+};
+
 
 const handleLanguageChange = (event) => {
   setLanguage(event.target.value);
@@ -294,6 +311,14 @@ const handleLanguageChange = (event) => {
             <p>Arabic</p>
           </button>
           {isLoading && <Loader />}
+          <button className={`language-option ${selectedLanguage === 'en' ? 'selected' : ''}`} onClick={() => handleLanguageSelectEn('en')}>
+            <p>English</p>
+          </button>
+          {isLoading && <Loader />}
+          <button className={`language-option ${selectedLanguage === 'hi' ? 'selected' : ''}`} onClick={() => handleLanguageSelectHi('hi')}>
+            <p>Hindi</p>
+          </button>
+          {isLoading && <Loader />}
         </div>
       )} 
       {isLoading && <Loader />}
@@ -307,6 +332,18 @@ const handleLanguageChange = (event) => {
         <div>
           <h3 className='head2'>Translated Text In Arabic: </h3>
           <p>{ArTranslatedTxt}</p>
+        </div>
+      )}
+      {!isLoading && EnTranslatedTxt && (
+        <div>
+          <h3 className='head2'>Translated Text In English: </h3>
+          <p>{EnTranslatedTxt}</p>
+        </div>
+      )}
+      {!isLoading && HiTranslatedTxt && (
+        <div>
+          <h3 className='head2'>Translated Text In Hindi: </h3>
+          <p>{HiTranslatedTxt}</p>
         </div>
       )}
     </div>
