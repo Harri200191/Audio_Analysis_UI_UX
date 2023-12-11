@@ -11,7 +11,7 @@ const FileLoader = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('');  
   const [TurkTranslatedTxt, setTurkTranslatedTxt] = useState(''); 
   const [ArTranslatedTxt, setArTranslatedTxt] = useState(''); 
-  const [EnTranslatedTxt, setEnTranslatedTxt] = useState(''); 
+  const [EnTranslatedTxt, setEnTranslatedTxt] = useState(convertedText); 
   const [HiTranslatedTxt, setHiTranslatedTxt] = useState(''); 
   const [Topic, setTopic] = useState(''); 
   const [Topic2, setTopic2] = useState(''); 
