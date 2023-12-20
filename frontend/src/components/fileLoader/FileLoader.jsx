@@ -199,7 +199,7 @@ const handleLanguageSelectHi = (language) => {
   setSelectedLanguage('hi');
 
   if (language && convertedText) { 
-    setIsLoading(true) 
+    setIsLoading(true)  
     axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
       .then((response) => {   
         setHiTranslatedTxt(response.data.translated_txt);
