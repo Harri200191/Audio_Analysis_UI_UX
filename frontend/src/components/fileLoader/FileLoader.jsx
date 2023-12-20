@@ -286,13 +286,7 @@ const handleLanguageChange = (event) => {
       <div> 
           {Topic && (
             <div className='summary_topic'>
-              <h3>Topic Of The Video: </h3>
-              <p>{Topic}</p>
-              <br/>
-              <h3>And Also:</h3>
-              <p>{Topic2}, {Topic3}</p>
-              <br/>
-              <h3>And Also:</h3>
+              <h3>Topic Of The Video: </h3>   
               <p>{Topic5}</p>
               {isLoading && <Loader />}
             </div>
