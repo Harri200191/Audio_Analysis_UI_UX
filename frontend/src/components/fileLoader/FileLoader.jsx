@@ -57,9 +57,8 @@ const FileLoader = () => {
         .then((response) => {  
           let audi = response.data.audio_file
           toast.success("Changed to wav format!")
-          setIsLoading(true) 
           setTimeout(() => {
-            axios.post(`http://127.0.0.1:5000/api/convert-mp4-to-text`, {withCredentials: true})
+            axios.post(`http://127.0.0.1:5000/api/convert-mp4-to-text`, formData, {withCredentials: true})
             .then((response) => { 
               let txt = response.data.text
               setConvertedText(response.data.text);
@@ -104,29 +103,65 @@ const FileLoader = () => {
     } 
   }
 
-  const FindPeople = (txt) =>{   
-    setIsLoading(true) 
-    axios.get(`http://127.0.0.1:5000/api/analyze-audio/${txt}`, {withCredentials: true})
-      .then((response) => {   
-        setnoofpeople(response.data.person_count);
-        setTopic2(response.data.topic)
-        setTopic3(response.data.topic2)
-        toast.success("People Found succesfully!") 
-        setIsLoading(false)
-        setTimeout(() => {
-          FindTopic(txt);
-        }, 1000);
-      })
-      .catch((error) => {  
-        console.log(error)
-        setIsLoading(false) 
-        toast.error('Some error!');
-      }); 
+  const handleLanguageSelectEn = (language) => {
+    setSelectedLanguage('en');
+  
+    if (language && convertedText) { 
+      setIsLoading(true) 
+      axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+        .then((response) => {   
+          setEnTranslatedTxt(response.data.translated_txt);
+          toast.success("Translated succesfully!")
+          setIsLoading(false)
+        })
+        .catch((error) => {  
+          setIsLoading(false) 
+          toast.error('Conversion error!');
+        });
+    }
+  };
+ 
+
+  const FindPeople = (txt) =>{    
+    setIsLoading(true);
+
+    axios.get(`http://127.0.0.1:5000/api/translate_toen/${txt}`, {withCredentials: true})
+    .then((response) => {   
+      let entxt = response.data.translated_txt
+      setEnTranslatedTxt(response.data.translated_txt);
+      toast.success("Translated succesfully!");
+      setIsLoading(true) 
+      setTimeout(() => {
+        axios.get(`http://127.0.0.1:5000/api/analyze-audio/${entxt}`, {withCredentials: true})
+          .then((response) => {   
+            setnoofpeople(response.data.person_count);
+            setTopic2(response.data.topic)
+            setTopic3(response.data.topic2)
+            toast.success("People Found succesfully!") 
+            setIsLoading(false)
+            setTimeout(() => {
+              FindTopic(entxt);
+            }, 3000);
+          })
+        }, 1000)
+        .catch((error) => {  
+          console.log(error)
+          setIsLoading(false) 
+          toast.error('Some error!');
+        }); 
+      setIsLoading(false);
+    })
+    .catch(() => {  
+      setIsLoading(false);
+      toast.error('Conversion error!');
+    });
+
+
 }
 
-const FindTopic = (txt) =>{   
+const FindTopic = (entxt) =>{   
   setIsLoading(true) 
-  axios.get(`http://127.0.0.1:5000/api/findtopic/${txt}`, {withCredentials: true})
+  axios.get(`http://127.0.0.1:5000/api/findtopic/${entxt}`, {withCredentials: true})
     .then((response) => {   
       setTopic(response.data.topic);
       setTopic5(response.data.topic2);
@@ -175,25 +210,6 @@ const handleLanguageSelectAr = (language) => {
       });
   }
 };
-
-const handleLanguageSelectEn = (language) => {
-  setSelectedLanguage('en');
-
-  if (language && convertedText) { 
-    setIsLoading(true) 
-    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
-      .then((response) => {   
-        setEnTranslatedTxt(response.data.translated_txt);
-        toast.success("Translated succesfully!")
-        setIsLoading(false)
-      })
-      .catch((error) => {  
-        setIsLoading(false) 
-        toast.error('Conversion error!');
-      });
-  }
-};
-
 
 const handleLanguageSelectHi = (language) => {
   setSelectedLanguage('hi');
