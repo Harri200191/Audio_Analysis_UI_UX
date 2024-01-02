@@ -79,8 +79,7 @@ const FileLoader = () => {
         })
         .catch((error) => { 
           console.log(error)
-          setIsLoading(false) 
-          toast.error('Conversion error!');
+          setIsLoading(false)  
         });
         return null;
       } 
@@ -98,7 +97,7 @@ const FileLoader = () => {
       .catch((error) => { 
         console.log(error)
         setIsLoading(false) 
-        toast.error('Conversion error!');
+        //toast.error('Conversion error!');
       });  
     } 
   }
@@ -153,7 +152,7 @@ const FileLoader = () => {
     })
     .catch(() => {  
       setIsLoading(false);
-      toast.error('Conversion error!');
+      //toast.error('Conversion error!');
     });
 
 
@@ -167,6 +166,9 @@ const FindTopic = (entxt) =>{
       setTopic5(response.data.topic2);
       toast.success("Topic Found succesfully!")
       setIsLoading(false)
+      setTimeout(() => {
+        FindSummary(entxt);
+      }, 1000);
     })
     .catch((error) => {  
       console.log(error)
@@ -174,6 +176,46 @@ const FindTopic = (entxt) =>{
       toast.error('Some error!');
     }); 
 }
+
+  const FindSummary = (entxt) => { 
+    setIsLoading(true) 
+    axios.get(`http://127.0.0.1:5000/api/findSummary/${entxt}`, {withCredentials: true})
+      .then((response) => {  
+        setArSumm(response.data.summary_ar);
+        setTrSumm(response.data.summary_tr)
+        setEnSumm(response.data.summary_en)
+        toast.success("Topic Found succesfully!")
+
+        setTimeout(() => {
+          HandleSentiment(entxt);
+        }, 1000);
+ 
+        setIsLoading(false)
+      })
+      .catch((error) => {  
+        console.log(error)
+        setIsLoading(false) 
+        toast.error('Some error!');
+      }); 
+  };
+
+  const HandleSentiment = (txt) => {
+    setIsLoading(true) 
+    axios.get(`http://127.0.0.1:5000/api/sentiment/${txt}`, {withCredentials: true})
+      .then((response) => {   
+        setPosPerc(response.data.positive)
+        setNegPerc(response.data.negative)
+        setFlag(true)
+        toast.success("Sentiments Retrieved!")
+        setIsLoading(false)
+      })
+      .catch((error) => {  
+        console.log(error)
+        setIsLoading(false) 
+        toast.error('Some error!');
+      }); 
+  };
+
 
 const handleLanguageSelect = (language) => {
   setSelectedLanguage('tr');
@@ -315,6 +357,31 @@ const handleLanguageChange = (event) => {
             </div>
           )}
       </div>
+      {EnSumm && (
+        <div className='summary_topic_2'>
+          <h3>Summary In English</h3>
+          <p>{EnSumm}</p>
+        </div>
+      )}
+      {TrSumm && (
+        <div className='summary_topic_2'>
+          <h3>Summary In Turkish </h3>
+          <p>{TrSumm}</p>
+        </div>
+      )}
+      {ArSumm && (
+        <div className='summary_topic_2'>
+          <h3>Summary in Arabic</h3>
+          <p>{ArSumm}</p>
+        </div>
+      )}
+      {flag && (
+        <div className='summary_topic_2'>
+          <h3>Sentiment Analysis</h3>
+          <p>Positive Percentage: {PosPerc}</p>
+          <p>Negative Percentage: {NegPerc}</p>
+        </div>
+      )}
       {convertedText && (
         <div className="language-selector">
           <h2 className='topic'>Select a Language To Translate To</h2>
