@@ -57,6 +57,7 @@ const FileLoader = () => {
         .then((response) => {  
           let audi = response.data.audio_file
           toast.success("Changed to wav format!")
+          setIsLoading(true)
           setTimeout(() => {
             axios.post(`http://127.0.0.1:5000/api/convert-mp4-to-text`, formData, {withCredentials: true})
             .then((response) => { 
