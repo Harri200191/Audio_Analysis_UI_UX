@@ -300,8 +300,7 @@ const handleLanguageChange = (event) => {
               Choose Language:
               <select className='t2' value={language} onChange={handleLanguageChange}>
                 <option value="en-US">English</option>
-                <option value="ar-EG">Arabic</option>
-                <option value="tr-TR">Turkish</option>
+                <option value="ar-EG">Arabic</option> 
                 <option value="hi-IN">Hindi</option>
               </select>
             </label>
