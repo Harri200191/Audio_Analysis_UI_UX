@@ -26,7 +26,6 @@ const FileLoader = () => {
   const [noofpeople, setnoofpeople] = useState(null)
   const [language, setLanguage] = useState('en-US');
 
- 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];     
     setSelectedFile(file);
