@@ -6,3 +6,6 @@
 *.mp3
 .env
 *.mp4
+/frontend/.env
+/backend/.env
+```
