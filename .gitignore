@@ -4,4 +4,5 @@
 *.tar
 *.wav
 *.mp3
+.env
 *.mp4
