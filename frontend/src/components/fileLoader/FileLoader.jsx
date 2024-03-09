@@ -63,7 +63,7 @@ const FileLoader = () => {
               let txt = response.data.text
               setConvertedText(response.data.text);
               toast.success("Converted to text!")
-              setIsLoading(false)
+              //setIsLoading(false)
               setTimeout(() => {
                 FindPeople(txt);
               }, 1000);
@@ -75,7 +75,7 @@ const FileLoader = () => {
             }); 
           }, 3000);
 
-          setIsLoading(false) 
+          //setIsLoading(false) 
         })
         .catch((error) => { 
           console.log(error)
@@ -89,7 +89,7 @@ const FileLoader = () => {
         let txt = response.data.text
         setConvertedText(response.data.text);
         toast.success("Converted to text!")
-        setIsLoading(false)
+        //setIsLoading(false)
         setTimeout(() => {
           FindPeople(txt);
         }, 1000);
@@ -137,7 +137,7 @@ const FileLoader = () => {
             setTopic2(response.data.topic)
             setTopic3(response.data.topic2)
             toast.success("People Found succesfully!") 
-            setIsLoading(false)
+            //setIsLoading(false)
             setTimeout(() => {
               FindTopic(entxt);
             }, 3000);
@@ -165,7 +165,7 @@ const FindTopic = (entxt) =>{
       setTopic(response.data.topic);
       setTopic5(response.data.topic2);
       toast.success("Topic Found succesfully!")
-      setIsLoading(false)
+      //setIsLoading(false)
       setTimeout(() => {
         FindSummary(entxt);
       }, 1000);
