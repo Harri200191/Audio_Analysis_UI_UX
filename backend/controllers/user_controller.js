@@ -274,6 +274,14 @@ const resetPassword = asyncHandler(async(req, resp) => {
 
 
 // -------------------------------------------------------------------------------------
+// Route to handle file upload
+const uploadFile = (req, res) => {  
+    res.json({ filename: req.file.filename });
+};
+// -------------------------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------------------------
 module.exports = {
     RegisterUser,
     LogInUser,
@@ -283,5 +291,6 @@ module.exports = {
     UpdateUser,
     ChangePassw, 
     resetPassword,
+    uploadFile
 };
 // -------------------------------------------------------------------------------------

@@ -34,5 +34,5 @@ export const { SET_LOGIN, SET_NAME, SET_USER } = authslice.actions;
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectName = (state) => state.auth.name;
 export const selectUser = (state) => state.auth.user;
-
+ 
 export default authslice.reducer;

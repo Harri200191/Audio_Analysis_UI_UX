@@ -147,3 +147,20 @@ export const changePassword = async (formData) => {
     toast.error(message);
   }
 };
+
+export const createUserWithFile = async (fileData) => {
+  try {
+      const formData = new FormData(); 
+      formData.append('file', fileData);
+
+      const response = await axios.post(`${BACKEND_URL}/FileUpload`, formData);
+ 
+      return response;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};

@@ -1,9 +1,10 @@
 const express = require("express");
 const user_model = require("../models/user_model");
-const {RegisterUser, UpdateUser, resetPassword, ChangePassw, LogInUser, LogOut, FetchData, LoginStatus} = require("../controllers/user_controller");
+const {RegisterUser, UpdateUser, resetPassword, ChangePassw, LogInUser, LogOut, FetchData, LoginStatus, uploadFile} = require("../controllers/user_controller");
 const protect = require("../middleware/AuthMiddleware");
 const ffmpeg = require('fluent-ffmpeg');
 const multer = require('multer');
+const uploader = require('../middleware/Upload');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -19,6 +20,8 @@ router.get("/LoggedIn", LoginStatus);
 router.patch("/UpdateUser", protect, UpdateUser);
 router.patch("/ChangePass", protect, ChangePassw); 
 router.put("/ResetPassword/:resetToken", resetPassword);
+router.post('/FileUpload', uploadFile, uploader.single('file'))
+
 
 router.post('/convert-to-wav', upload.single('file'), (req, res) => {
     if (!req.file) {

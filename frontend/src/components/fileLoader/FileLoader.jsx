@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./FileLoader.scss"; 
 import { toast } from 'react-toastify';
 import Loader from "../../components/loader/Loader"; 
+import { createUserWithFile } from '../../services/authServices';
 
 const FileLoader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,9 +14,7 @@ const FileLoader = () => {
   const [ArTranslatedTxt, setArTranslatedTxt] = useState(''); 
   const [EnTranslatedTxt, setEnTranslatedTxt] = useState(convertedText); 
   const [HiTranslatedTxt, setHiTranslatedTxt] = useState(''); 
-  const [Topic, setTopic] = useState(''); 
-  const [Topic2, setTopic2] = useState(''); 
-  const [Topic3, setTopic3] = useState(''); 
+  const [Topic, setTopic] = useState('');  
   const [Topic5, setTopic5] = useState(''); 
   const [EnSumm, setEnSumm] = useState(''); 
   const [TrSumm, setTrSumm] = useState(''); 
@@ -38,6 +37,8 @@ const FileLoader = () => {
     localStorage.removeItem('convertedText');
   };
 
+ 
+
   const handleConversion = () => {
     if (selectedFile) {
       const formData = new FormData();
@@ -51,12 +52,12 @@ const FileLoader = () => {
       const fileName = selectedFile.name;
       const fileExtension = fileName.split('.').pop();
       
-      if (fileExtension == "mp4"){
+      if (fileExtension === "mp4"){
         axios.post(`http://127.0.0.1:5000/api/convert-video-to-mp3`, formData, {withCredentials: true})
         .then((response) => {  
-          let audi = response.data.audio_file
+          //let audi = response.data.audio_file
           toast.success("Changed to wav format!")
-          setIsLoading(true)
+          setIsLoading(true) 
           setTimeout(() => {
             axios.post(`http://127.0.0.1:5000/api/convert-mp4-to-text`, formData, {withCredentials: true})
             .then((response) => { 
@@ -97,7 +98,7 @@ const FileLoader = () => {
       .catch((error) => { 
         console.log(error)
         setIsLoading(false) 
-        //toast.error('Conversion error!');
+        toast.error('Conversion error!');
       });  
     } 
   }
@@ -123,7 +124,7 @@ const FileLoader = () => {
 
   const FindPeople = (txt) =>{    
     setIsLoading(true);
-
+    
     axios.get(`http://127.0.0.1:5000/api/translate_toen/${txt}`, {withCredentials: true})
     .then((response) => {   
       let entxt = response.data.translated_txt
@@ -133,9 +134,7 @@ const FileLoader = () => {
       setTimeout(() => {
         axios.get(`http://127.0.0.1:5000/api/analyze-audio/${entxt}`, {withCredentials: true})
           .then((response) => {   
-            setnoofpeople(response.data.person_count);
-            setTopic2(response.data.topic)
-            setTopic3(response.data.topic2)
+            setnoofpeople(response.data.person_count);  
             toast.success("People Found succesfully!") 
             //setIsLoading(false)
             setTimeout(() => {

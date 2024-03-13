@@ -28,6 +28,7 @@ const user_schema = mongoose.Schema(
             minLength: [8, "Password must be at least 8 charachters"],
             //maxLength: [20, "Password must have at most 20 charachters"],
         },
+        file: String, // New field to store file path or file data
     },
     
     {
