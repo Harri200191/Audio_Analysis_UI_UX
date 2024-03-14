@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom"; 
 import axios from 'axios';
 import "./FileLoader.scss"; 
 import { toast } from 'react-toastify';
 import Loader from "../../components/loader/Loader"; 
+import { selectName, SET_LOGIN } from "../../redux/features/auth/authslice";
 import { createUserWithFile } from '../../services/authServices';
 
 const FileLoader = () => {
@@ -25,6 +28,10 @@ const FileLoader = () => {
   const [noofpeople, setnoofpeople] = useState(null)
   const [language, setLanguage] = useState('en-US');
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const name = useSelector(selectName);
+
   const handleFileSelect = (e) => {
     const file = e.target.files[0];     
     setSelectedFile(file);
@@ -37,25 +44,24 @@ const FileLoader = () => {
     localStorage.removeItem('convertedText');
   };
 
- 
 
   const handleConversion = () => {
     if (selectedFile) {
-      const formData = new FormData();
+      const formData = new FormData();  
       formData.append('file', selectedFile); 
       formData.append('language', language);
+      formData.append('name', name);
       setIsLoading(true) 
 
       let newformData = new FormData();
-      newformData.append('file', "C:\\Audio_Analysis_UI_UX\\uploads\\output.mp3"); 
+      newformData.append('file', `C:\\Audio_Analysis_UI_UX\\uploads\\${name}\\output.mp3`); 
 
       const fileName = selectedFile.name;
       const fileExtension = fileName.split('.').pop();
       
       if (fileExtension === "mp4"){
         axios.post(`http://127.0.0.1:5000/api/convert-video-to-mp3`, formData, {withCredentials: true})
-        .then((response) => {  
-          //let audi = response.data.audio_file
+        .then((response) => {   
           toast.success("Changed to wav format!")
           setIsLoading(true) 
           setTimeout(() => {
