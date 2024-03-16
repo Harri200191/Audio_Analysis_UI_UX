@@ -51,7 +51,6 @@ const FileLoader = () => {
       formData.append('file', selectedFile); 
       formData.append('language', language);
       formData.append('name', name);
-
       setIsLoading(true) 
 
       let newformData = new FormData();
@@ -59,9 +58,7 @@ const FileLoader = () => {
 
       const fileName = selectedFile.name;
       const fileExtension = fileName.split('.').pop();
-      const fileNameWithoutExtension = fileName.splot('.')[0];
-      const filePath = `uploads/${name}/${fileNameWithoutExtension.name}.txt`;
-
+      
       if (fileExtension === "mp4"){
         axios.post(`http://127.0.0.1:5000/api/convert-video-to-mp3`, formData, {withCredentials: true})
         .then((response) => {   
@@ -75,7 +72,7 @@ const FileLoader = () => {
               toast.success("Converted to text!")
               //setIsLoading(false)
               setTimeout(() => {
-                FindPeople(txt, filePath);
+                FindPeople(txt);
               }, 1000);
             })
             .catch((error) => { 
@@ -131,7 +128,7 @@ const FileLoader = () => {
   };
  
 
-  const FindPeople = (txt, filePath) =>{    
+  const FindPeople = (txt) =>{    
     setIsLoading(true);
     
     axios.get(`http://127.0.0.1:5000/api/translate_toen/${txt}`, {withCredentials: true})
@@ -147,7 +144,7 @@ const FileLoader = () => {
             toast.success("People Found succesfully!") 
             //setIsLoading(false)
             setTimeout(() => {
-              FindTopic(entxt, filePath);
+              FindTopic(entxt);
             }, 3000);
           })
         }, 1000)
@@ -166,7 +163,7 @@ const FileLoader = () => {
 
 }
 
-const FindTopic = (entxt, filePath) =>{   
+const FindTopic = (entxt) =>{   
   setIsLoading(true) 
   axios.get(`http://127.0.0.1:5000/api/findtopic/${entxt}`, {withCredentials: true})
     .then((response) => {   
@@ -175,7 +172,7 @@ const FindTopic = (entxt, filePath) =>{
       toast.success("Topic Found succesfully!")
       //setIsLoading(false)
       setTimeout(() => {
-        FindSummary(entxt, filePath);
+        FindSummary(entxt);
       }, 1000);
     })
     .catch((error) => {  
@@ -185,7 +182,7 @@ const FindTopic = (entxt, filePath) =>{
     }); 
 }
 
-  const FindSummary = (entxt, filePath) => { 
+  const FindSummary = (entxt) => { 
     setIsLoading(true) 
     axios.get(`http://127.0.0.1:5000/api/findSummary/${entxt}`, {withCredentials: true})
       .then((response) => {  
@@ -195,7 +192,7 @@ const FindTopic = (entxt, filePath) =>{
         toast.success("Topic Found succesfully!")
 
         setTimeout(() => {
-          HandleSentiment(entxt, filePath);
+          HandleSentiment(entxt);
         }, 1000);
  
         setIsLoading(false)
@@ -207,27 +204,13 @@ const FindTopic = (entxt, filePath) =>{
       }); 
   };
 
-  const HandleSentiment = (txt, filePath) => {
+  const HandleSentiment = (txt) => {
     setIsLoading(true) 
     axios.get(`http://127.0.0.1:5000/api/sentiment/${txt}`, {withCredentials: true})
       .then((response) => {   
         setPosPerc(response.data.positive)
         setNegPerc(response.data.negative)
         setFlag(true)
-
-        const dataToWrite = `Positive Sentiment: ${response.data.positive}\nNegative Sentiment: ${response.data.negative}\n`;
-
-        fs.appendFile(filePath, dataToWrite, (err) => {
-          if (err) {
-            console.error('Error writing to file:', err);
-            setIsLoading(false);
-            toast.error('Error writing to file');
-            return;
-          }
-          toast.success('Sentiments Written to File!');
-          setIsLoading(false);
-        });
-
         toast.success("Sentiments Retrieved!")
         setIsLoading(false)
       })
