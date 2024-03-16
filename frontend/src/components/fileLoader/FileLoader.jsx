@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-const fs = require('fs');
 import { NavLink, useNavigate } from "react-router-dom"; 
 import axios from 'axios';
 import "./FileLoader.scss"; 
