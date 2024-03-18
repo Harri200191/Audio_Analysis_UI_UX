@@ -126,10 +126,13 @@ const FileLoader = () => {
         });
     }
   };
- 
 
   const FindPeople = (txt) =>{    
     setIsLoading(true);
+
+    const formData = new FormData();  
+    formData.append('file', selectedFile);  
+    formData.append('name', name);
     
     axios.get(`http://127.0.0.1:5000/api/translate_toen/${txt}`, {withCredentials: true})
     .then((response) => {   
@@ -138,11 +141,10 @@ const FileLoader = () => {
       toast.success("Translated succesfully!");
       setIsLoading(true) 
       setTimeout(() => {
-        axios.get(`http://127.0.0.1:5000/api/analyze-audio/${entxt}`, {withCredentials: true})
+        axios.post(`http://127.0.0.1:5000/api/analyze-audio/${entxt}`, formData, {withCredentials: true})
           .then((response) => {   
             setnoofpeople(response.data.person_count);  
-            toast.success("People Found succesfully!") 
-            //setIsLoading(false)
+            toast.success("People Found succesfully!")  
             setTimeout(() => {
               FindTopic(entxt);
             }, 3000);
@@ -164,8 +166,12 @@ const FileLoader = () => {
 }
 
 const FindTopic = (entxt) =>{   
+  const formData = new FormData();  
+  formData.append('file', selectedFile);  
+  formData.append('name', name);
+
   setIsLoading(true) 
-  axios.get(`http://127.0.0.1:5000/api/findtopic/${entxt}`, {withCredentials: true})
+  axios.post(`http://127.0.0.1:5000/api/findtopic/${entxt}`, formData, {withCredentials: true})
     .then((response) => {   
       setTopic(response.data.topic);
       setTopic5(response.data.topic2);
@@ -183,8 +189,12 @@ const FindTopic = (entxt) =>{
 }
 
   const FindSummary = (entxt) => { 
+    const formData = new FormData();  
+    formData.append('file', selectedFile);  
+    formData.append('name', name);
+
     setIsLoading(true) 
-    axios.get(`http://127.0.0.1:5000/api/findSummary/${entxt}`, {withCredentials: true})
+    axios.post(`http://127.0.0.1:5000/api/findSummary/${entxt}`, formData, {withCredentials: true})
       .then((response) => {  
         setArSumm(response.data.summary_ar);
         setTrSumm(response.data.summary_tr)
@@ -205,8 +215,12 @@ const FindTopic = (entxt) =>{
   };
 
   const HandleSentiment = (txt) => {
+    const formDataNew = new FormData();   
+    formDataNew.append('file', selectedFile); 
+    formDataNew.append('name', name);
+    
     setIsLoading(true) 
-    axios.get(`http://127.0.0.1:5000/api/sentiment/${txt}`, {withCredentials: true})
+    axios.post(`http://127.0.0.1:5000/api/sentiment/${txt}`, formDataNew, {withCredentials: true})
       .then((response) => {   
         setPosPerc(response.data.positive)
         setNegPerc(response.data.negative)
@@ -280,7 +294,6 @@ const handleLanguageSelectHi = (language) => {
 const handleLanguageChange = (event) => {
   setLanguage(event.target.value);
 };
-
 
   useEffect(() => {
     if (selectedFile) {
