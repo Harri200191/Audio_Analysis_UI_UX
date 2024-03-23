@@ -69,8 +69,7 @@ const FileLoader = () => {
             .then((response) => { 
               let txt = response.data.text
               setConvertedText(response.data.text);
-              toast.success("Converted to text!")
-              //setIsLoading(false)
+              toast.success("Converted to text!") 
               setTimeout(() => {
                 FindPeople(txt);
               }, 1000);
@@ -80,9 +79,7 @@ const FileLoader = () => {
               setIsLoading(false) 
               toast.error('Cant Convert to text!');
             }); 
-          }, 3000);
-
-          //setIsLoading(false) 
+          }, 3000); 
         })
         .catch((error) => { 
           console.log(error)
@@ -95,8 +92,7 @@ const FileLoader = () => {
       .then((response) => { 
         let txt = response.data.text
         setConvertedText(response.data.text);
-        toast.success("Converted to text!")
-        //setIsLoading(false)
+        toast.success("Converted to text!") 
         setTimeout(() => {
           FindPeople(txt);
         }, 1000);
@@ -192,9 +188,10 @@ const FindTopic = (entxt) =>{
     const formData = new FormData();  
     formData.append('file', selectedFile);  
     formData.append('name', name);
+    formData.append('text', entxt);
 
     setIsLoading(true) 
-    axios.post(`http://127.0.0.1:5000/api/findSummary/${entxt}`, formData, {withCredentials: true})
+    axios.post(`http://127.0.0.1:5000/api/findSummary`, formData, {withCredentials: true})
       .then((response) => {  
         setArSumm(response.data.summary_ar);
         setTrSumm(response.data.summary_tr)

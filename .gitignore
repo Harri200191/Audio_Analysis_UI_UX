@@ -5,6 +5,7 @@
 *.wav
 *.mp3
 .env
+*.txt
 *.mp4
 /frontend/.env
 /backend/.env
