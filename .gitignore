@@ -4,8 +4,7 @@
 *.tar
 *.wav
 *.mp3
-.env
-*.txt
+.env 
 *.mp4
 /frontend/.env
 /backend/.env
