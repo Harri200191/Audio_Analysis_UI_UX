@@ -1,3 +1,12 @@
+# Audio Analysis UI UX 
+## Description
+
+Hey folks! This full stack application is completely AI powered as it aims to convert either audio or a video to its corresponding text and that too in few languages. The resulting text can also be converted to another language upon selection. 🎙️📹🔤  
+
+Some other pros of the application include sentiment analysis of the text so one can easily judge the sentiment of the audio or video being uploaded itself. This comes with a topic and summary section as well. 💬📈📝  
+  
+If we talk about the technical details, I used a ReactJS frontend with 2 different backend servers - One in NodeJS to handle user profiles and login procedure coupled with mongoDB and the other in Flask to handle the main AI logic. This logic contained the use of PyTorch, transformers, HuggingFace inference API's, nltk, pydub, moviepy and an array of other libraries as well. Have a look at the GitHub repo for more! 💻🚀
+
 ## Technologies Used
 
 ### Frontend
@@ -14,7 +23,7 @@
 
 1. Clone the repository:
 
-```bash
+```git
 git clone https://github.com/Harri200191/Audio_Analysis_UI_UX.git
 ```
 
@@ -34,7 +43,7 @@ cd ..
 cd frontend
 npm install
 
-cd..
+cd ..
 ```
 
 ## Usage
