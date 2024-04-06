@@ -11,6 +11,7 @@ import { createUserWithFile } from '../../services/authServices';
 const FileLoader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [convertedText, setConvertedText] = useState(''); 
+  const [convertedTextWOTimestamp, setConvertedTextWOTimestamp] = useState(''); 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('');  
   const [TurkTranslatedTxt, setTurkTranslatedTxt] = useState(''); 
@@ -67,8 +68,9 @@ const FileLoader = () => {
           setTimeout(() => {
             axios.post(`http://127.0.0.1:5000/api/convert-mp4-to-text`, formData, {withCredentials: true})
             .then((response) => { 
-              let txt = response.data.text
+              let txt = response.data.simple_text
               setConvertedText(response.data.text);
+              setConvertedTextWOTimestamp(response.data.simple_text);
               toast.success("Converted to text!") 
               setTimeout(() => {
                 FindPeople(txt);
@@ -90,8 +92,9 @@ const FileLoader = () => {
 
       axios.post(`http://127.0.0.1:5000/api/convert-mp3-to-text`, formData, {withCredentials: true})
       .then((response) => { 
-        let txt = response.data.text
+        let txt = response.data.simple_text
         setConvertedText(response.data.text);
+        setConvertedTextWOTimestamp(response.data.simple_text);
         toast.success("Converted to text!") 
         setTimeout(() => {
           FindPeople(txt);
@@ -238,7 +241,7 @@ const handleLanguageSelect = (language) => {
 
   if (language && convertedText) { 
     setIsLoading(true) 
-    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedTextWOTimestamp}`)
       .then((response) => {   
         setTurkTranslatedTxt(response.data.translated_txt);
         toast.success("Translated succesfully!")
@@ -256,7 +259,7 @@ const handleLanguageSelectAr = (language) => {
 
   if (language && convertedText) { 
     setIsLoading(true) 
-    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedTextWOTimestamp}`)
       .then((response) => {   
         setArTranslatedTxt(response.data.translated_txt);
         toast.success("Translated succesfully!")
@@ -274,7 +277,7 @@ const handleLanguageSelectHi = (language) => {
 
   if (language && convertedText) { 
     setIsLoading(true)  
-    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+    axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedTextWOTimestamp}`)
       .then((response) => {   
         setHiTranslatedTxt(response.data.translated_txt);
         toast.success("Translated succesfully!")
