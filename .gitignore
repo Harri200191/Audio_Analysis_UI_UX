@@ -8,4 +8,5 @@
 *.mp4
 /frontend/.env
 /backend/.env
+.venv
 ```
