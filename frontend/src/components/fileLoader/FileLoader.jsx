@@ -96,6 +96,7 @@ const FileLoader = () => {
         let txt = response.data.text
         setConvertedText(response.data.whisper_str);
         setConvertedTextWOTimestamp(response.data.text);
+        
         toast.success("Converted to text!") 
         setTimeout(() => {
           FindPeople(txt);
@@ -353,7 +354,7 @@ const handleLanguageChange = (event) => {
               {isLoading && <Loader />}
               <hr className='line'/>
               <h3>Converted Text:</h3>
-              <div className='output'>{convertedText}</div>
+              <div className='output' dangerouslySetInnerHTML={{ __html: convertedText }} /> 
               {isLoading && <Loader />}
             </div>
           )}
