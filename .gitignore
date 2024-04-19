@@ -9,4 +9,6 @@
 /frontend/.env
 /backend/.env
 .venv
+*.exe
+WHISPER_EXE_FILES
 ```

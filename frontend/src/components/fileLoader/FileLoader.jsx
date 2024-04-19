@@ -69,8 +69,9 @@ const FileLoader = () => {
             axios.post(`http://127.0.0.1:5000/api/convert-mp4-to-text`, formData, {withCredentials: true})
             .then((response) => { 
               let txt = response.data.simple_text
-              setConvertedText(response.data.text);
-              setConvertedTextWOTimestamp(response.data.simple_text);
+              console.log(response.data.whisper_str);
+              setConvertedText(response.data.whisper_str);
+              setConvertedTextWOTimestamp(response.data.text);
               toast.success("Converted to text!") 
               setTimeout(() => {
                 FindPeople(txt);
@@ -92,9 +93,9 @@ const FileLoader = () => {
 
       axios.post(`http://127.0.0.1:5000/api/convert-mp3-to-text`, formData, {withCredentials: true})
       .then((response) => { 
-        let txt = response.data.simple_text
-        setConvertedText(response.data.text);
-        setConvertedTextWOTimestamp(response.data.simple_text);
+        let txt = response.data.text
+        setConvertedText(response.data.whisper_str);
+        setConvertedTextWOTimestamp(response.data.text);
         toast.success("Converted to text!") 
         setTimeout(() => {
           FindPeople(txt);
@@ -113,7 +114,7 @@ const FileLoader = () => {
   
     if (language && convertedText) { 
       setIsLoading(true) 
-      axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedText}`)
+      axios.get(`http://127.0.0.1:5000/api/translate_to${language}/${convertedTextWOTimestamp}`)
         .then((response) => {   
           setEnTranslatedTxt(response.data.translated_txt);
           toast.success("Translated succesfully!")
