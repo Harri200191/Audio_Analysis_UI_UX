@@ -68,8 +68,7 @@ const FileLoader = () => {
           setTimeout(() => {
             axios.post(`http://127.0.0.1:5000/api/convert-mp4-to-text`, formData, {withCredentials: true})
             .then((response) => { 
-              let txt = response.data.simple_text
-              console.log(response.data.whisper_str);
+              let txt = response.data.text 
               setConvertedText(response.data.whisper_str);
               setConvertedTextWOTimestamp(response.data.text);
               toast.success("Converted to text!") 
