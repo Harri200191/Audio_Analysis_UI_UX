@@ -252,7 +252,6 @@ def convert_mp4_to_text():
 
     return jsonify({'text': text_string, 'simple_text': transcript.text})
 
-
 @app.route('/api/translate_toar/<string:text>', methods=['GET'], endpoint='translate_to_ar')
 def translate_to_ar(text):    
     translator = Translator() 
