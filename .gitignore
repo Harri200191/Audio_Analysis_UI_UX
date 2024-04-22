@@ -11,4 +11,5 @@
 .venv
 *.exe
 WHISPER_EXE_FILES
+LLAMA_MODEL
 ```
