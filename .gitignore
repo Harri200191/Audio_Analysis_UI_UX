@@ -9,7 +9,10 @@
 /frontend/.env
 /backend/.env
 .venv
-*.exe
+*.exe   
+llama.cpp
 WHISPER_EXE_FILES
 LLAMA_MODEL
+meta-llama
+llama_model.safetensors
 ```
