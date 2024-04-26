@@ -360,7 +360,7 @@ const handleLanguageChange = (event) => {
         </div>   
       </div>
       <div> 
-          {Topic && (
+          {Topic5 && (
             <div className='summary_topic'>
               <h3>Topic Of The Video: </h3>   
               <p>{Topic5}</p>
