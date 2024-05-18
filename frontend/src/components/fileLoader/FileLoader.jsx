@@ -320,6 +320,7 @@ const handleLanguageChange = (event) => {
                 <option value="en-US">English</option>
                 <option value="ar-EG">Arabic</option> 
                 <option value="hi-IN">Hindi</option>
+                <option value="tr-TR">Turkish</option>
               </select>
             </label>
             <br /> 
