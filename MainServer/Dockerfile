@@ -14,8 +14,5 @@ RUN pip install -r requirements.txt
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Define environment variable
-ENV HUGGING_FACE_API_KEY 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
-
 # Run app.py when the container launches
 CMD ["flask", "run"]
