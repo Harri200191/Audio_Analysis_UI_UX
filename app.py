@@ -9,8 +9,7 @@ import spacy
 from moviepy.editor import VideoFileClip  
 from googletrans import Translator
 from gensim.summarization import summarize 
-import subprocess 
-import os 
+import subprocess  
 from dotenv import load_dotenv
 import pysrt 
 
